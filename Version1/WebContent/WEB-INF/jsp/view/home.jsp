@@ -9,9 +9,16 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/common.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user.js"></script>
 <title>메인</title> 
+<%
+String id = null;
+if(session.getAttribute("login") != null) {
+	id = session.getAttribute("login").toString();
+}
+%>
 </head>
 <body>
 <!--img prefix  http://poiuhsy.cdn1.cafe24.com/ -->
+<%if(id == null) { %>
 <div class="DIV_LOGIN_SECTION" align="center">
 	<p>로그인 정보 입력</p>
 	<table>
@@ -20,6 +27,9 @@
 		<tr><td colspan="2" align="center"><input type="button" value="로그인" onclick="login()"><input type="button" value="회원가입" onclick="registGo()"></td></tr>
 	</table>
 </div>
+<%} else { %>
+<%=id %>님 환영합니다. <input type="button" value="로그아웃" onclick="logout()">
+<%} %>
 <form id="frm" action="" method="post">
 </form>
 </body>

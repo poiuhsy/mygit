@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+	<Resource name="jdbc/meetinConn"
+        auth="Container"
+        type="javax.sql.DataSource"
+        username="meetin_app"
+        password="4431"
+        driverClassName="com.mysql.jdbc.Driver"
+        factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+        url="jdbc:mysql://localhost:3306/spring_prac"
+        logintimeout="100"
+        maxActive="500"
+        maxIdle="100"/>
+</Context>
