@@ -1,9 +1,6 @@
 package com.meetin.ctrlr;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import com.meetin.action.Action;
 import com.meetin.action.ActionForward;
+import com.meetin.action.user.GetUserAction;
 import com.meetin.action.user.UserLoginAction;
+import com.meetin.action.user.UserModifyAction;
 import com.meetin.action.user.UserRegistAction;
-import com.meetin.dto.User;
 
 
 public class UserController extends HttpServlet {
@@ -42,20 +40,21 @@ public class UserController extends HttpServlet {
 		if(goORdo.equals("go")) {
 			forward = new ActionForward();
 			if(pageCmd.equals("regist")) {
-				forward.setPath("/WEB-INF/jsp/view/regist.jsp");
+				forward.setPath("/WEB-INF/jsp/view/user_regist.jsp");
 				forward.setRedirect(false);
-			} else if(pageCmd.equals("change")) {
-				
+			} else if(pageCmd.equals("modify")) {
+				action = new GetUserAction();
+				try {
+					forward = action.excute(request, response);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if(pageCmd.equals("withdrawal")) {
 				
 			}
 		} else {
-			if(pageCmd.equals("login")) {
-				String userId = request.getParameter("user_id");
-				String userPw = request.getParameter("user_pw");
-				request.setAttribute("id", userId);
-				request.setAttribute("pw", userPw);
-				
+			if(pageCmd.equals("login")) {				
 				action = new UserLoginAction();
 				try {
 					forward = action.excute(request, response);
@@ -64,18 +63,6 @@ public class UserController extends HttpServlet {
 					e.printStackTrace();
 				}
 			} else if(pageCmd.equals("regist")) {
-				System.out.println(request.getParameter("nm"));
-				User user = new User();
-				user.setUser_id(request.getParameter("id"));
-				user.setUser_nm(request.getParameter("nm"));
-				user.setUser_phone(request.getParameter("phone"));
-				Date now = new Date();
-				DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String user_reg_dt = format.format(now);
-				user.setUser_reg_dt(user_reg_dt);
-				user.setUser_gb(1);
-				request.setAttribute("user", user);
-				request.setAttribute("pw", request.getParameter("pw"));
 				action = new UserRegistAction();
 				try {
 					forward = action.excute(request, response);
@@ -83,8 +70,14 @@ public class UserController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if(pageCmd.equals("change")) {
-				
+			} else if(pageCmd.equals("modify")) {
+				action = new UserModifyAction();
+				try {
+					forward = action.excute(request, response);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else if(pageCmd.equals("withdrawal")) {
 				
 			} else if(pageCmd.equals("logout")) {
@@ -100,7 +93,6 @@ public class UserController extends HttpServlet {
 			if(forward.isRedirect()) {
 				response.sendRedirect(forward.getPath());
 			} else {
-				System.out.println(forward.getPath());
 				request.getRequestDispatcher(forward.getPath()).forward(request, response);
 			}
 		}
