@@ -26,7 +26,7 @@ public class UserLoginAction implements Action {
 		session.removeAttribute("__rsaPrivateKey__");
 		
 		if(privateKey == null) {
-			throw new RuntimeException("¾ÏÈ£È­ ºñ¹ÐÅ° Á¤º¸¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+			throw new RuntimeException("ë¹„ë°€í‚¤ê°€ ì—†ìŠµë‹ˆë‹¤.");
 		}
 		
 		String userId = decryptRsa(privateKey, secureId);
@@ -51,7 +51,7 @@ public class UserLoginAction implements Action {
         byte[] encryptedBytes = hexToByteArray(securedValue);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-        String decryptedValue = new String(decryptedBytes, "utf-8"); // ¹®ÀÚ ÀÎÄÚµù ÁÖÀÇ.
+        String decryptedValue = new String(decryptedBytes, "utf-8"); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½.
         return decryptedValue;
 	}
 	

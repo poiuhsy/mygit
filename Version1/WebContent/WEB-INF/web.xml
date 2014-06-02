@@ -27,6 +27,14 @@
   	<servlet-name>UserController</servlet-name>
   	<url-pattern>/user/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>MeetingDetailController</servlet-name>
+  	<servlet-class>com.meetin.ctrlr.MeetingDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MeetingDetailController</servlet-name>
+  	<url-pattern>/meet/*</url-pattern>
+  </servlet-mapping>
   <!-- 
   <error-page>
   	<error-code>404</error-code>
