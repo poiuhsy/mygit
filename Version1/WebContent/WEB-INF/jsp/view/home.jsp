@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/style/div.css">
+	href="<%=request.getContextPath()%>/resources/style/home.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/rsa/jsbn.js"></script>
@@ -52,23 +52,25 @@
 		</c:if>
 		<!-- 로그인 되어 있는 상태 -->
 		<c:if test="${sessionScope.login != null}">
-${sessionScope.login.user_nm } 님 환영합니다. <input type="button"
-				value="로그아웃" onclick="logout()">
+			<font style="font-size: 15px; color: blue;">${sessionScope.login.user_nm}</font>
+			<font style="font-size: 12px;">님 환영합니다.</font>
+			<input type="button" value="로그아웃" onclick="logout()">
 			<input type="button" value="회원정보 변경"
 				onclick="modifyGo('${sessionScope.login.user_id}')">
 			<input type="button" value="회원 탈퇴"
-				onclick="withdrawalGo('${sessionScope.login.user_id}')">
+				onclick="withdrawalGo('${sessionScope.login.user_id}')">  
 		</c:if>
 		<div style="margin-top: 50px;">
 			<table width="500px">
 				<tr>
 					<th>모임번호</th>
 					<th>카테고리</th>
-					<th>카테이름</th>
-					<th>카테날짜</th>
+					<th>모임이름</th>
+					<th>모임날짜</th>
 				</tr>
 				<c:forEach var="meeting" items="${meetings }">
-					<tr onclick="go_detail('${meeting.meeting_sq}')">
+					<tr onclick="go_detail('${meeting.meeting_sq}')"
+						style="cursor: pointer;">
 						<td align="center">${meeting.meeting_sq }</td>
 						<td align="center">${meeting.meeting_cate }</td>
 						<td align="center">${meeting.meeting_nm }</td>

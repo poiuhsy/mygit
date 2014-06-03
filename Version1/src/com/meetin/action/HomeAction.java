@@ -45,15 +45,16 @@ public class HomeAction implements Action {
 			request.setAttribute("publicKeyExponent", publicKeyExponent);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("HomeAction.excute():" + e.getMessage());
 		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("HomeAction.excute():" + e.getMessage());
 		}
 		
 		MeetingDao dao = new MeetingDao();
 		ArrayList<Meeting> meetings = dao.getMeetingList("C000");
 		request.setAttribute("meetings", meetings);
+		dao.disconnect();
 		ActionForward forward = new ActionForward(); 
 		forward.setRedirect(false);
 		forward.setPath("/WEB-INF/jsp/view/home.jsp");
