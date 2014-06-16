@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="meetin">
+
+	<typeAlias alias="testdFileData" type="com.meetin.data.Faq_Data"/>
+	<typeAlias alias="meetingdFileData" type="com.meetin.data.Meeting"/>
+	
+	
+	<select id="getHealthCheck" resultClass="String">
+		SELECT NOW()
+	</select>
+	<select id="testest" resultClass="testdFileData">
+		SELECT * FROM act_users_tb
+	</select>
+	<select id="m_moim" resultClass="meetingdFileData" parameterClass="String">
+		select t1.MEETING_SQ, t2.CATE_NM, t1.MEETING_NM, t1.MEETING_DT, 
+			   t1.MEETING_FL from meeting_tb t1 inner join meeting_cate_tb t2 on t1.MEETING_CATE=t2.CATE_CD 	 
+			   <isNotEqual  compareValue="C000">
+				   	WHERE t1.MEETING_CATE <![CDATA[ = ]]> #cate#		   	
+			   </isNotEqual>		 		   
+	</select>
+	<select id="sq_moim" resultClass="meetingdFileData" parameterClass="int">
+		select t1.MEETING_SQ, t2.CATE_NM, t1.MEETING_NM, t1.MEETING_DT, 
+			   t1.MEETING_FL from meeting_tb t1 inner join meeting_cate_tb t2 on t1.MEETING_CATE=t2.CATE_CD 	 
+			   WHERE t1.MEETING_SQ <![CDATA[ = ]]> #sq#		   				   		 		   
+	</select>
+	
+</sqlMap>
+	
