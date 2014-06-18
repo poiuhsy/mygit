@@ -22,7 +22,6 @@
 
 .DIV_INPUT_FORM {
 	width: 100%;
-	height: 50%;
 }
 .DIV_ACCESS_TERM {
 	width: 49.4%;
@@ -30,15 +29,14 @@
 	float: left;
 }
 .TB_ACCESS_TERM {
-	width: 90%;
+	width: 100%;
 	height: 40%;
-	margin-top: 5%;
 }
 .TB_ACCESS_TERM th {
 	height: 10%;
 }
 .TA_ACCESS_TERM {
-	width: 100%;
+	width: 99%;
 	height: 100%;
 	resize: none;
 }

@@ -37,10 +37,13 @@ public class SessionController extends HttpServlet {
 			request.getSession().setAttribute("a1", "23");
 			response.getWriter().print(request.getSession().getAttribute(key));
 		}else if(cmd.equals("add")){
-			if(request.getSession().getAttribute(key)==null){
-				request.getSession().setAttribute(key, request.getParameter("VAL"));
-			}
-			response.getWriter().print(request.getSession().getAttribute(key));
+			String[] key_list = request.getParameter("KEY").split("\\|");
+			String[] val_list = request.getParameter("VAL").split("\\|");
+			for(int i=0;i<key_list.length;++i){
+				if(!key_list[i].equals("") && !val_list[i].equals("")){
+					request.getSession().setAttribute(key_list[i],val_list[i]);
+				}
+			}			
 		}
 	}
 }

@@ -3,10 +3,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<%
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-Control","no-cache");
+	response.addHeader("Cache-Control","no-store");
+	response.setDateHeader("Expires", 0);
+%>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/style/user_regist.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -14,14 +21,16 @@
 	src="<%=request.getContextPath()%>/resources/js/common.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/user.js"></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/login.js"></script>
-<script type="text/javascript">
-	isLogin(0);
-</script>
 <title>회원가입</title>
+<c:if test="${sessionScope.login != null}">
+		<script type="text/javascript">
+			alert("로그인 중에는 이용할 수 업읍니다.");
+			location.replace("/");
+		</script>
+</c:if>
 </head>
 <body>
+
 	<div class="DIV_WRAP">
 		<div class="DIV_LOGO">
 			<font style="font-size: 30px; color: #ff6725; font-weight: bolder;">밋인

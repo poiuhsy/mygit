@@ -1,0 +1,61 @@
+.selectbox{
+	position:relative;
+	border:1px solid #cdcdcd; 
+	width: 130px;
+	height:42px;
+}
+.selectbox.active{
+	z-index:20
+}
+.selectbox ul{
+	display:none;
+	position:absolute;
+	top:100%;
+	left:0;
+	border:1px solid #cecece;
+	border-top:none;
+	border-bottom:none;
+	width:90px;
+	background:#fff;
+	margin:1px 0 0 -1px
+}
+.selectbox.active ul{
+	z-index:30
+}
+.selectbox button{
+	background:none;
+	border:none;
+	display:block;		
+	text-align:left;
+}
+.selectbox>button{
+	padding:0;
+	margin:0;
+	width:130px;
+	height:42px;
+	background:no-repeat 100% 50%;
+}
+.selectbox>button>span{
+	display:block;
+	border-right:1px solid #cecece;
+	margin-right:22px;
+	padding:12px 10px;
+}
+.selectbox>ul li{
+	margin-left:-40px;
+	position:relative;
+	font-family:"굴림";
+	font-size:13px;
+	list-style: none;
+	text-align: center;
+	padding-top: 2px
+}
+.selectbox>ul button, .selectbox>ul span{
+	color:#555;
+	text-decoration:none;
+	font-family:"굴림";
+	display:block;
+	font-size:13px;
+	padding:5px 10px;
+	text-align: center;
+}

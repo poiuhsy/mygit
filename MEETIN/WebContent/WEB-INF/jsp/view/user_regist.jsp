@@ -4,10 +4,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<%
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-Control","no-cache");
+	response.addHeader("Cache-Control","no-store");
+	response.setDateHeader("Expires", 0);
+%>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/style/selectbox.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/style/user_regist.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -16,117 +25,167 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/user.js"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/login.js"></script>
-<script type="text/javascript">
-	isLogin(0);
-</script>
+	src="<%=request.getContextPath()%>/resources/js/selectbox.js"></script>
 <title>회원가입</title>
-</head>
+<style type="text/css">
+	.INPUT_SETTING{
+		height: 40px;
+		border:none;
+		border: 1px solid #d0d0d0
+	}
+	select{
 
+	}
+</style>
+<c:if test="${sessionScope.login != null}">
+		<script type="text/javascript">
+			alert("로그인 중에는 이용할 수 업읍니다.");
+			location.replace("/");
+		</script>
+	</c:if>
+</head>
+<body>	
 	<div class="DIV_WRAP">
-		<div class="DIV_LOGO">
-			<font style="font-size: 30px; color: #ff6725; font-weight: bolder;">밋인
-				BETA</font>
+		<div style="margin-bottom: 20px">
+			<img src="<%=request.getContextPath()%>/resources/images/common/e_join_title.png">
 		</div>
-		<div class="DIV_TITLE">
-			<font style="font-size: 20px; color: #a0a0a0; font-weight: bolder;">이메일로
-				가입하기</font>
-		</div>
-		<div class="DIV_INPUT_FORM">
-			<div  align="center">
-				<table width="900px" border="0">
+		<div class="DIV_INPUT_FORM" >
+			<div  align="center" >
+				<table width="979px">
 					<tr>
-						<td width="410px" align="left" valign="top">
-							<table class="TB_ACCESS_TERM">
+						<td width="460px" align="left" valign="top">
+							<table class="TB_ACCESS_TERM" border="0" cellpadding="2">
 								<tr>
-									<th align="left"><font
-										style="font-size: 15px; color: #a0a0a0; font-weight: bold;">밋인
-											이용약관 동의(필수)</font></th>
+									<td align="left"><font
+										style="font-size: 14px; color: #53515c; font-weight: bold;">밋인 이용약관 동의
+										<font style="font-size: 13px; color: #ff4e50;">(필수)</font></font></td>
 								</tr>
 								<tr>
-									<td align="center"><textarea class="TA_ACCESS_TERM"
+									<td align="center" style="padding-left: 5px"><textarea class="TA_ACCESS_TERM"
 											disabled="disabled"></textarea></td>
 								</tr>
 								<tr>
-									<th align="right"><input type="checkbox" name="meetin_term" id="meetin_term">밋인
-										이용약관에 동의합니다.</th>
+									<td align="right">
+										<input type="checkbox" name="meetin_term" id="meetin_term">
+										<font style="font-size: 13px; color: #53515c;">밋인 이용약관에 동의합니다.</font>										
+									</td>
 								</tr>
 							</table>
-							<table class="TB_ACCESS_TERM">
+							<table class="TB_ACCESS_TERM" style="margin-top: 10px">
 								<tr>
-									<th align="left"><font
-										style="font-size: 15px; color: #a0a0a0; font-weight: bold;">개인정보
-											수집 및 이용에 대한 안내(필수)</font></th>
+									<td align="left"><font
+										style="font-size: 14px; color: #53515c; font-weight: bold;">개인정보 수집 및 이용에 대한 안내
+										<font style="font-size: 13px; color: #ff4e50;">(필수)</font></font></td>
 								</tr>
 								<tr>
-									<td align="center"><textarea class="TA_ACCESS_TERM"
+									<td align="center" style="padding-left: 5px"><textarea class="TA_ACCESS_TERM"
 											disabled="disabled"></textarea></td>
 								</tr>
 								<tr>
-									<th align="right"><input type="checkbox" name="private_term" id="private_term">개인정보
-										수집 및 이용에 동의합니다.</th>
+									<td align="right" >
+										<input type="checkbox" name="private_term" id="private_term">										
+										<font style="font-size: 13px; color: #53515c;">개인정보 수집 및 이용에 동의합니다.</font>
+									</td>									
 								</tr>
 							</table>
 						</td>
-						<td width="80px">&nbsp;</td>
-						<td width="410px" align="left" valign="top">
-							<table style="text-align: left" border="0">
+						<td width="69px">&nbsp;</td>
+						<td width="460px" align="left" valign="top">
+							<table style="text-align: left" border="0" width="460px">
 								<tr>
-									<th style="text-align: left">이름</th>
+									<th style="text-align: left">
+										<font style="font-size: 14px; color: #53515c; font-weight: bold;">
+											이름
+										</font>
+									</th>
 								</tr>
 								<tr>
 									<td style="padding-left: 5px">
-										<input type="text" id="name" style="width: 98%"/>
+										<input class="INPUT_SETTING" type="text" id="name" style="width: 98%"/>
 									</td>
 								</tr>
+								<tr><td height="8"></td></tr>
 								<tr>
-									<th style="text-align: left">이메일</th>
+									<th align="left"><font
+										style="font-size: 14px; color: #53515c; font-weight: bold;">이메일</font></th>
 								</tr>
 								<tr>
-									<td>
-										<table>
+									<td height="80">
+										<table height="80">
 											<tr>
 												<td>
-													<input type="text" style="width: 120px" id="USER_EMAIL_FIRST"/>
+													<input class="INPUT_SETTING" type="text" style="width: 160px" id="USER_EMAIL_FIRST"/>
 												</td>
 												<td>@</td>
-												<td><input type="text" style="width: 120px" id="USER_EMAIL_LAST"/></td>
-												<td>
-													<select>
-														<option value="">선 택</option>
-														<option value="naver.com">naver.com</option>
-														<option value="hanmail.net">hanmail.net</option>
-													</select>
+												<td><input class="INPUT_SETTING"type="text"
+													style="width: 120px;padding-left: 10px" id="USER_EMAIL_LAST"/>
+												</td>
+												<td>										
+													<div class="selectbox" value="130">    
+														<button type="button" 
+														style="background-image: url('<%=request.getContextPath()%>/resources/images/common/box_btn.png') ">
+														<span class="SELECT_TXT" >직접입력</span>
+														</button>   
+														<ul id="email_select">       
+															<li value="직접입력"><span style="cursor: pointer;">직접입력</span></li>
+														    <li value="naver.com"><span style="cursor: pointer;">naver.com</span></li>        
+														    <li value="hanmail.net"><span style="cursor: pointer;">hanmail.net</span></li>          
+														 </ul>
+													 </div>
+												</td>
+											</tr>
+											<tr id="CHECK_EMAIL"  >
+												<td colspan="4">
+													<table>
+														<tr>
+															<td><img src="<%=request.getContextPath()%>/resources/images/regist/icon_speaker.png"/></td>
+															<td><font color="red" id="EHCK_EMAIL_TXT" style="font-size: 13px">중복된 이메일</font> </td>
+														</tr>
+													</table>
 												</td>
 											</tr>
 										</table>						
 									</td>
 								</tr>
+								<tr><td height="8"></td></tr>
 								<tr>
-									<th style="text-align: left">비밀번호</th>
+									<th align="left"><font
+										style="font-size: 14px; color: #53515c; font-weight: bold;">비밀번호</font></th>
 								</tr>
 								<tr>
 									<td style="padding-left: 5px">
-										<input type="password" id="pwd" style="width: 98%" onkeyup="input_pwd()"/>
-										<span id="pwd_txt" style="position: absolute;font-size: 11px;color: red;display: none"></span>
+										<input class="INPUT_SETTING" type="password" id="pwd" style="width: 98%" onkeyup="input_pwd()"/>
+										<span id="pwd_txt" style="position: absolute;font-size: 12px;color: red;display: none"></span>
 									</td>
 								</tr>
 								<tr>
 									<td style="padding-left: 5px">
-										<input type="password" id="check_pwd" style="width: 98%" onkeyup="input_check_pwd()"/>
-										<span id="check_pwd_txt" style="position: absolute;font-size: 11px;color: red;display: none"></span>
+										<input class="INPUT_SETTING" type="password" id="check_pwd" style="width: 98%" onkeyup="input_check_pwd()"/>
+										<span id="check_pwd_txt" style="position: absolute;font-size: 12px;color: red;display: none"></span>
 									</td>
 								</tr>
+								<tr><td height="8"></td></tr>
 								<tr>
-									<th style="text-align: left">생년월일</th>
+									<th align="left"><font
+										style="font-size: 14px; color: #53515c; font-weight: bold;">성별/생년월일</font></th>
 								</tr>
 								<tr>
 									<td>
 										<table width="100%">
 											<tr>
 												<td>
-													<input type="radio" name="gender" value="1" id="man">남자 &nbsp;
-													<input type="radio" name="gender" value="2" id="woman">여자
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td>													
+																<img id="man" style="cursor: pointer;" name="gender" onmouseover="select_gender(1)"
+																src="<%=request.getContextPath()%>/resources/images/regist/male_1.png" alt="1">														
+															</td>
+															<td>
+																<img id="woman" style="cursor: pointer;" name="gender" onmouseover="select_gender(2)"
+																src="<%=request.getContextPath()%>/resources/images/regist/female_0.png" alt="2">
+															</td>
+														</tr>
+													</table>
 												</td>
 												<td width="12px">&nbsp;</td>
 												<td align="right">
@@ -136,46 +195,84 @@
 															return sValue.substring(sValue.length() - len); 
 														}
 													%>
-													<select id="year">
-														<option value="">년도</option>
-														<%
-									                		SimpleDateFormat YYYY = new SimpleDateFormat("yyyy");
-									                		int Year = Integer.parseInt(YYYY.format(new Date()));
-									                		for (int i=1952;i<Year+1;i++) {
-									                		%>
-									                			<option value="<%=i%>"><%=i%>년</option>
-									                		<%
-									                		}
-								                		%>
-													</select>
-													<select id="month">
-														<option value="">월</option>
-														<%for (int i=1;i<13;i++) {%>
-									                		<option value="<%=fillZero(i, 2)%>"><%=fillZero(i, 2)%>월</option>
-									                		
-									                	<%}%>
-													</select>
-													<select id="day">
-														<option value="">일</option>
-														<%for (int i=1;i<32;i++) {%>
-									                		<option value="<%=fillZero(i, 2)%>"><%=fillZero(i, 2)%>일</option>
-									                		
-									                	<%}%>
-													</select>
+													<table>
+														<tr>
+															<td>
+																<div class="selectbox" value="100">    
+																	<button type="button" 
+																	style="background-image: url('<%=request.getContextPath()%>/resources/images/common/box_btn.png') ">
+																	<span class="SELECT_TXT" id="year">년도</span>
+																	</button>  
+																	<ul>      																   		 
+																	    <%
+														                	SimpleDateFormat YYYY = new SimpleDateFormat("yyyy");
+														                	int Year = Integer.parseInt(YYYY.format(new Date()));
+														                	for (int i=1952;i<Year+1;i++) {
+														                	%>
+														                		<li value="<%=i%>"><span style="cursor: pointer;"><%=i%>년</span></li> 
+														                	<%
+														                	}
+											                			%>          
+																	 </ul>
+																 </div>
+															</td>
+															<td>
+																<div class="selectbox" value="85">    
+																	<button type="button" 
+																	style="background-image: url('<%=request.getContextPath()%>/resources/images/common/box_btn.png') ">
+																	<span class="SELECT_TXT" id="month">월</span>
+																	</button>   
+																	   <ul>       
+																	     	<%
+														                		for (int i=1;i<13;i++) {
+														                		%>
+														                			<li value="<%=fillZero(i, 2)%>"><span style="cursor: pointer;"><%=fillZero(i, 2)%>월</span></li> 
+														                		<%
+														                		}
+											                				%>          
+																	   </ul>
+																 </div>
+															</td>
+															<td>
+																<div class="selectbox" value="85">    
+																	<button type="button" 
+																	style="background-image: url('<%=request.getContextPath()%>/resources/images/common/box_btn.png') ">
+																	<span class="SELECT_TXT" id="day">일</span>
+																	</button>   
+																	   <ul>       
+																	     	<%
+														                		for (int i=1;i<32;i++) {
+														                		%>
+														                			<li value="<%=fillZero(i, 2)%>"><span style="cursor: pointer;"><%=fillZero(i, 2)%>일</span></li> 
+														                		<%
+														                		}
+											                				%>          
+																	   </ul>
+																 </div>
+															</td>
+														</tr>
+													</table>
 												</td>
 											</tr>
 										</table>
 									</td>
-								</tr>
-									
+								</tr>								
 							</table>
 						</td>
 					</tr>
 				</table>						
 			</div>
 		</div>
-		<div class="DIV_USER_INFO">
-			<input type="button" value="다음단계" onclick="next_regist_step2()"/>
+		<div style="width: 979px;margin-top:40px ">
+			<table width="100%">
+				<tr>
+					<td height="1px" style="border-top: 1px solid #d0d0d0">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<div  style="width: 979px;margin-top:80px" align="center">
+			<img style="cursor: pointer;" onclick="next_regist_step2()"
+			src="<%=request.getContextPath()%>/resources/images/regist/next_btn.png"/>
 		</div>
 	</div>
 
@@ -187,7 +284,21 @@
 	$(document).ready(function(){
 		var left = $('#pwd').position().left+$('#pwd').width()-25;
 		var top = $('#pwd').position().top+($('#pwd').height()/2-3);
-		$('#pwd_txt').css({left: left,top:top});				
+		$('#pwd_txt').css({left: left,top:top});	
+		
+		//버젼 체크
+		var rv = "";
+		if (navigator.appName == 'Microsoft Internet Explorer') {
+			var ua = navigator.userAgent;
+			var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+			if (re.exec(ua) != null)
+				rv = parseFloat(RegExp.$1);
+		}
+		if (rv <= 8) {
+			$('input[type=text][type=password]').css('line-height','30px');
+		}
+		//
+		
 	});
 	function input_pwd(){
 		if($('#pwd').val()!=""){
@@ -196,6 +307,8 @@
 		}else{
 			$('#pwd_txt').hide();
 		}		
+		$('#check_pwd_txt').hide();	
+		$('#check_pwd').val("");
 	}
 	function input_check_pwd(){
 		if($('#check_pwd').val()!=""){
@@ -203,19 +316,44 @@
 			if($('#check_pwd').val()==$('#pwd').val()){
 				var left = $('#check_pwd').position().left+$('#check_pwd').width()-25;
 				var top = $('#check_pwd').position().top+($('#check_pwd').height()/2-3);
-				$('#check_pwd_txt').css({left: left,top:top});
-				
+				$('#check_pwd_txt').css({left: left,top:top});			
 				$('#check_pwd_txt').html("일치");
 			}else{
-				var left = $('#check_pwd').position().left+$('#check_pwd').width()-30;
+				var left = $('#check_pwd').position().left+$('#check_pwd').width()-35;
 				var top = $('#check_pwd').position().top+($('#check_pwd').height()/2-3);
 				$('#check_pwd_txt').css({left: left,top:top});
 				$('#check_pwd_txt').html("불일치");
 			}
 		}else{
 			$('#check_pwd_txt').hide();
+		}	
+	}
+	$('img[name=gender]').click(function(){
+		var idx = $(this).attr('alt');
+		if(idx==1){
+			$('#man').attr('src','<%=request.getContextPath()%>/resources/images/regist/male_1.png');
+			$('#woman').attr('src','<%=request.getContextPath()%>/resources/images/regist/female_0.png');
+		}else{
+			$('#man').attr('src','<%=request.getContextPath()%>/resources/images/regist/male_0.png');
+			$('#woman').attr('src','<%=request.getContextPath()%>/resources/images/regist/female_1.png');
+		}
+	});
+	$("#email_select li").click(function(){
+		if($(this).text()=="직접입력"){
+			$('#USER_EMAIL_LAST').val("");
+			$('#USER_EMAIL_LAST').attr('readonly',false);
+			$('#USER_EMAIL_LAST').focus();
+		}else{
+			$('#USER_EMAIL_LAST').val($(this).text());
+			$('#USER_EMAIL_LAST').attr('readonly',true);
 		}
 		
-	}
+	});	
+	$('#USER_EMAIL_FIRST').change(function(){
+		
+	});
+	$('#USER_EMAIL_LAST').change(function(){
+		
+	});
 </script>
 </html>

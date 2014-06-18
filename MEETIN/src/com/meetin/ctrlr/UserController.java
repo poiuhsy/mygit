@@ -48,6 +48,24 @@ public class UserController extends HttpServlet {
 			if (pageCmd.equals("regist")) {
 				forward.setPath("/WEB-INF/jsp/view/user_regist.jsp");			
 				forward.setRedirect(false);
+			} else if (pageCmd.equals("regist_1")) {
+				action = new UserRegistAction();			
+				try {
+					forward = action.excute(request, response);
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else if (pageCmd.equals("regist_2")) {
+				forward = new ActionForward();
+				forward.setPath("/WEB-INF/jsp/view/user_regist_1.jsp");
+				forward.setRedirect(false);
+				System.out.println("123123");
+			} else if(pageCmd.equals("regist_3")) {
+				forward = new ActionForward();
+				forward.setPath("/WEB-INF/jsp/view/user_regist_2.jsp");
+				forward.setRedirect(false);
 			} else if (pageCmd.equals("modify")) {
 				action = new GetUserAction();
 				try {
@@ -77,7 +95,7 @@ public class UserController extends HttpServlet {
 				forward.setPath("/");
 				forward.setRedirect(true);
 			} else if (pageCmd.equals("regist")) {
-				action = new UserRegistAction();
+				action = new UserRegistAction();			
 				try {
 					forward = action.excute(request, response);
 
@@ -89,11 +107,13 @@ public class UserController extends HttpServlet {
 		}
 
 		if (forward != null) {
-			if (forward.isRedirect()) {				
+			if (forward.isRedirect()) {			
 				response.sendRedirect(forward.getPath());	
+				return;
 			} else {
 				request.getRequestDispatcher(forward.getPath()).forward(
 						request, response);
+				return;
 			}
 		}
 	}

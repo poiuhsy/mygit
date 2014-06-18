@@ -13,3 +13,6 @@ function go_detail(meeting_sq) {
 	$('#frm').attr("method","get");
 	$('#frm').submit();
 }
+function go_main(){
+	location.href = "/";
+}

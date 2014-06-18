@@ -8,12 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <%
-	response.setHeader("Pragma","no-cache"); 
-	response.setHeader("Cache-Control","no-store"); 
-	response.setDateHeader("Expires",0); 
-	if(request.getProtocol().equals("HTTP/1.1")){ 
-		response.setHeader("Cache-Control","no-cache"); 
-	}
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-Control","no-cache");
+	response.addHeader("Cache-Control","no-store");
+	response.setDateHeader("Expires", 0);
+	
 %>
 
 <link rel="stylesheet"

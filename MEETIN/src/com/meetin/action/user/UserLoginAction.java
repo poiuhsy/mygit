@@ -15,6 +15,7 @@ public class UserLoginAction implements Action {
 		// TODO Auto-generated method stub	
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(true);
+		System.out.println(request.getSession().getAttribute("login_url"));
 		forward.setPath((String)request.getSession().getAttribute("login_url"));
 		request.getSession().removeAttribute("login_url");
 		return forward;

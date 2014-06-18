@@ -46,8 +46,7 @@ function login(userid, password, rsaPublicKeyModulus, rsaPpublicKeyExponent) {
 		data : {"CMD":"login","user_id":securedUserid,"user_pw":securedPassword},
 		success : function(result) {
 			if(result!="null"){
-				$('#frm').attr('action','/user/login.do');		
-				$('#frm').submit();
+				location.replace('/user/login.do');
 			}else{
 				alert("아이디와 비밀번호를 다시 확인 해주세요.\n밋인 회원이 아닐 수 도 있습니다.");
 			}
@@ -59,22 +58,8 @@ function logout(userid) {
 	createInputHidden('frm','user_id',userid);
 	$('#frm').submit();
 }
-
 function registGo() {
-	$.ajax({
-		url : "/session/",
-		type : 'post',
-		dataType : "text",
-		async : true, 
-		data : {"KEY":"start_regist_step","CMD":"add","VAL":"1"},
-		success : function(result) {
-			if(result!="null"){
-				$('#frm').attr('action','/user/regist.go');
-				$('#frm').attr('method','get');
-				$('#frm').submit();
-			}
-		}
-	});		
+	location.href = "/user/regist.go";			
 }
 function next_regist_step2(){
 	if(!$('#private_term').is(':checked')){
@@ -93,7 +78,20 @@ function next_regist_step2(){
 		}else if($('#year').val()=="" || $('#month').val()=="" || $('#day').val()=="" ){
 			alert("생년월일을 입력해 주세요");
 		}else{
-			$('#frm').attr('action','/user/regist.do');
+			//$.ajax({
+			//	url : "/session/",
+			//	type : 'post',
+			//	dataType : "text",
+			//	async : true, 
+			//	data : {"KEY":"email|pwd|name|gender|birthdate","CMD":"add",
+			//		   "VAL":$('#USER_EMAIL_FIRST').val()+"@"+$('#USER_EMAIL_LAST').val()+"|"+$('#pwd').val()+"|"+$('#name').val()
+			//		   +"|"+$('input[type=radio]:checked').val()+"|"+$('#year').val()+$('#month').val()+$('#day').val()
+			//	},
+			//	success : function(result) {
+			//		location.href = "/user/regist.do?step=1";
+			//	}
+			//});		
+			$('#frm').attr('action','/user/regist_1.go');
 			createInputHidden('frm','step',"1");
 			createInputHidden('frm','email',$('#USER_EMAIL_FIRST').val()+"@"+$('#USER_EMAIL_LAST').val());
 			createInputHidden('frm','pwd',$('#pwd').val());
@@ -101,10 +99,12 @@ function next_regist_step2(){
 			createInputHidden('frm','gender',$('input[type=radio]:checked').val());	
 			createInputHidden('frm','birthdate',$('#year').val()+$('#month').val()+$('#day').val());	
 			$('#frm').submit();	
+			
 		}	
 	}
 }
 function next_regist_step3(){
+	//location.href = "/user/regist.do?step=2&my_image=&egg="+$('input[type=radio]:checked').val();		
 	$('#frm').attr('action','/user/regist.do');
 	createInputHidden('frm','step',"2");
 	createInputHidden('frm','my_image',"");
@@ -112,9 +112,10 @@ function next_regist_step3(){
 	$('#frm').submit();	
 }
 function skip_page(){
-	$('#frm').attr('action','/user/regist.do');
-	createInputHidden('frm','step',"2");	
-	$('#frm').submit();	
+	location.href = "/user/regist.do?step=2";	
+	//$('#frm').attr('action','/user/regist.do');
+	//createInputHidden('frm','step',"2");	
+	//$('#frm').submit();	
 }
 function registDo() {
 	$('#frm').attr('action','/user/regist.do');
