@@ -85,7 +85,13 @@
 				</c:forEach>
 			</table>
 		</div>
+		<div>
+			<input type="button" value="홈페이지 이용약관" onclick="get_term('1')">
+			<input type="button" value="개인정보 취급방침" onclick="get_term('2')">
+		</div>
 	</div>
-	<form id="frm" action="" method="post"></form>
+	<form id="frm" action="" method="post">
+		
+	</form>
 </body>
 </html>

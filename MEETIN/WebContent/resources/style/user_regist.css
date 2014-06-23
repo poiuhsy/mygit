@@ -35,10 +35,13 @@
 .TB_ACCESS_TERM th {
 	height: 10%;
 }
-.TA_ACCESS_TERM {
+.DIV_ACCESS_TERM {
 	width: 99%;
-	height: 100%;
-	resize: none;
+	height: 130px;
+	border: 1px solid #d0d0d0;
+	background-color: #ececec;
+	overflow: auto;
+	text-align: left;
 }
 
 .DIV_USER_INFO {

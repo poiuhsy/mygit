@@ -26,12 +26,14 @@
 	src="<%=request.getContextPath()%>/resources/js/user.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/selectbox.js"></script>
+
 <title>회원가입</title>
 <style type="text/css">
 	.INPUT_SETTING{
 		height: 40px;
 		border:none;
-		border: 1px solid #d0d0d0
+		border: 1px solid #d0d0d0;
+		padding-left: 10px
 	}
 	select{
 
@@ -50,7 +52,7 @@
 			<img src="<%=request.getContextPath()%>/resources/images/common/e_join_title.png">
 		</div>
 		<div class="DIV_INPUT_FORM" >
-			<div  align="center" >
+			<div>
 				<table width="979px">
 					<tr>
 						<td width="460px" align="left" valign="top">
@@ -61,8 +63,7 @@
 										<font style="font-size: 13px; color: #ff4e50;">(필수)</font></font></td>
 								</tr>
 								<tr>
-									<td align="center" style="padding-left: 5px"><textarea class="TA_ACCESS_TERM"
-											disabled="disabled"></textarea></td>
+									<td align="center" style="padding-left: 5px"><div id="tou" class="DIV_ACCESS_TERM"></div></td>
 								</tr>
 								<tr>
 									<td align="right">
@@ -78,8 +79,7 @@
 										<font style="font-size: 13px; color: #ff4e50;">(필수)</font></font></td>
 								</tr>
 								<tr>
-									<td align="center" style="padding-left: 5px"><textarea class="TA_ACCESS_TERM"
-											disabled="disabled"></textarea></td>
+									<td align="center" style="padding-left: 5px"><div id="pp" class="DIV_ACCESS_TERM"></div></td>
 								</tr>
 								<tr>
 									<td align="right" >
@@ -110,15 +110,15 @@
 										style="font-size: 14px; color: #53515c; font-weight: bold;">이메일</font></th>
 								</tr>
 								<tr>
-									<td height="80">
-										<table height="80">
-											<tr>
+									<td >
+										<table>
+											<tr >
 												<td>
 													<input class="INPUT_SETTING" type="text" style="width: 160px" id="USER_EMAIL_FIRST"/>
 												</td>
 												<td>@</td>
 												<td><input class="INPUT_SETTING"type="text"
-													style="width: 120px;padding-left: 10px" id="USER_EMAIL_LAST"/>
+													style="width: 120px" id="USER_EMAIL_LAST"/>
 												</td>
 												<td>										
 													<div class="selectbox" value="130">    
@@ -134,12 +134,15 @@
 													 </div>
 												</td>
 											</tr>
-											<tr id="CHECK_EMAIL"  >
-												<td colspan="4">
+											<tr>
+												<td colspan="4" id="CHECK_EMAIL"  style="display: none;">
 													<table>
 														<tr>
 															<td><img src="<%=request.getContextPath()%>/resources/images/regist/icon_speaker.png"/></td>
-															<td><font color="red" id="EHCK_EMAIL_TXT" style="font-size: 13px">중복된 이메일</font> </td>
+															<td>
+																<span id="CHECK_EMAIL_TXT" style="font-size: 13px;color:red"></span> 
+															
+															</td>
 														</tr>
 													</table>
 												</td>
@@ -154,14 +157,29 @@
 								</tr>
 								<tr>
 									<td style="padding-left: 5px">
-										<input class="INPUT_SETTING" type="password" id="pwd" style="width: 98%" onkeyup="input_pwd()"/>
-										<span id="pwd_txt" style="position: absolute;font-size: 12px;color: red;display: none"></span>
+										<input class="INPUT_SETTING" type="password" id="pwd" style="width: 98%;" onkeyup="input_pwd()"/>
+										<span id="pwd_txt" 
+										style="z-index:9;position: absolute;font-size: 12px;color: red;display: none"></span>
 									</td>
 								</tr>
 								<tr>
+									<td height="2px"></td>
+								</tr>
+								<tr>
 									<td style="padding-left: 5px">
-										<input class="INPUT_SETTING" type="password" id="check_pwd" style="width: 98%" onkeyup="input_check_pwd()"/>
-										<span id="check_pwd_txt" style="position: absolute;font-size: 12px;color: red;display: none"></span>
+										<input class="INPUT_SETTING" type="password" id="check_pwd" style="width: 98%;" onkeyup="input_check_pwd()"/>
+										<span id="check_pwd_txt" 
+										style="z-index:9;position: absolute ;font-size: 12px;color: red;display: none"></span>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4" id="CHECK_EMAIL"  style="display: none;">
+										<table>
+											<tr>
+												<td><img src="<%=request.getContextPath()%>/resources/images/regist/icon_speaker.png"/></td>
+												<td><font color="red" id="CHECK_PASSWORD_TXT" style="font-size: 13px"></font> </td>
+											</tr>
+										</table>
 									</td>
 								</tr>
 								<tr><td height="8"></td></tr>
@@ -281,10 +299,36 @@
 	</form>
 </body>
 <script type="text/javascript">
+	var email_check = false;
+	var pass_check = false;
+	var compare_pass = false;
+	var select_gender = 1;
 	$(document).ready(function(){
-		var left = $('#pwd').position().left+$('#pwd').width()-25;
-		var top = $('#pwd').position().top+($('#pwd').height()/2-3);
-		$('#pwd_txt').css({left: left,top:top});	
+		// 이용약관 불러오기
+		$.ajax({
+			url : "/resources/terms/terms_of_meetin.jsp",
+			type : 'post',
+			dataType : "text",
+			async : true,
+			data : {
+				"width" : $('#tou').width()-27
+			},
+			success : function(result) {
+				$('#tou').html(result);
+			}
+		});
+		$.ajax({
+			url : "/resources/terms/privacy_policy.jsp",
+			type : 'post',
+			dataType : "text",
+			async : true,
+			data : {
+				"width" : $('#pp').width()-27
+			},
+			success : function(result) {
+				$('#pp').html(result);
+			}
+		});
 		
 		//버젼 체크
 		var rv = "";
@@ -294,46 +338,98 @@
 			if (re.exec(ua) != null)
 				rv = parseFloat(RegExp.$1);
 		}
+
 		if (rv <= 8) {
 			$('input[type=text][type=password]').css('line-height','30px');
 		}
-		//
+		// 
+		
+		(function($) {
+		    $.each(['show','hide'], function(i, val) {		    	
+		        var _org = $.fn[val];	     
+		        $.fn[val] = function() {        	
+		            this.trigger(val);
+		            _org.apply(this, arguments);
+		            if($(this).attr('id')=="CHECK_EMAIL"){
+		            	if($('#pwd').val()!=""){
+		        			var top = $('#pwd').position().top+($('#pwd').height()/2)-4;
+		        			$('#pwd_txt').css({top:top});
+		            	}
+		            	
+		            	if($('#check_pwd').val()!=""){
+		            		var top = $('#check_pwd').position().top+($('#check_pwd').height()/2)-4;
+		            		$('#check_pwd_txt').css({top:top});
+		            	}
+		            	
+		            }
+		        };
+		    });
+		})(jQuery);
 		
 	});
 	function input_pwd(){
 		if($('#pwd').val()!=""){
+			var left = "";
+			var top = $('#pwd').position().top+($('#pwd').height()/2)-4;
+			if($('#pwd').val().match(/^.*(?=.{8,24})(?=.*[0-9])(?=.*[a-zA-Z]).*$/)!=null){
+				pass_check = true;
+				left = $('#pwd').position().left+$('#pwd').width()-28;	
+				$('#pwd_txt').html("진행");
+			}else{
+				left = $('#pwd').position().left+$('#pwd').width()-55;	
+				pass_check = false;
+				$('#pwd_txt').html("사용불가");
+			}
+			$('#pwd_txt').css({left: left,top:top});		
 			$('#pwd_txt').show();
-			$('#pwd_txt').html("진행");
+			
 		}else{
-			$('#pwd_txt').hide();
-		}		
-		$('#check_pwd_txt').hide();	
-		$('#check_pwd').val("");
+			$('#check_pwd_txt').hide();	
+			$('#check_pwd').val("");
+			$('#pwd_txt').hide();			
+		}				
 	}
 	function input_check_pwd(){
-		if($('#check_pwd').val()!=""){
-			$('#check_pwd_txt').show();		
-			if($('#check_pwd').val()==$('#pwd').val()){
-				var left = $('#check_pwd').position().left+$('#check_pwd').width()-25;
-				var top = $('#check_pwd').position().top+($('#check_pwd').height()/2-3);
-				$('#check_pwd_txt').css({left: left,top:top});			
-				$('#check_pwd_txt').html("일치");
+		if($('#pwd').val()!=""){
+			if(pass_check){
+				if($('#check_pwd').val()!=""){
+					var left = "";
+					var top = $('#check_pwd').position().top+($('#check_pwd').height()/2)-4;
+					$('#check_pwd_txt').show();		
+					if($('#check_pwd').val()==$('#pwd').val()){
+						left = $('#check_pwd').position().left+$('#check_pwd').width()-28;			
+						$('#check_pwd_txt').html("일치");
+						compare_pass = true;
+					}else{
+						compare_pass = false;
+						left = $('#check_pwd').position().left+$('#check_pwd').width()-38;	
+						$('#check_pwd_txt').html("불일치");
+					}
+					$('#check_pwd_txt').css({left: left,top:top});
+				}else{
+					compare_pass = false;
+					$('#check_pwd_txt').hide();
+				}
 			}else{
-				var left = $('#check_pwd').position().left+$('#check_pwd').width()-35;
-				var top = $('#check_pwd').position().top+($('#check_pwd').height()/2-3);
-				$('#check_pwd_txt').css({left: left,top:top});
-				$('#check_pwd_txt').html("불일치");
-			}
+				alert("입력하신 비밀번호가 조건에 맞지 않습니다.");
+				$('#check_pwd').val("");
+				$('#pwd').focus();
+			}		
 		}else{
-			$('#check_pwd_txt').hide();
-		}	
+			alert("비밀번호를 먼저 입력해 주십시오");
+			$('#check_pwd').val("");
+			$('#pwd').focus();
+		}
+							
 	}
 	$('img[name=gender]').click(function(){
 		var idx = $(this).attr('alt');
 		if(idx==1){
+			select_gender = 1;
 			$('#man').attr('src','<%=request.getContextPath()%>/resources/images/regist/male_1.png');
 			$('#woman').attr('src','<%=request.getContextPath()%>/resources/images/regist/female_0.png');
 		}else{
+			select_gender = 2;
 			$('#man').attr('src','<%=request.getContextPath()%>/resources/images/regist/male_0.png');
 			$('#woman').attr('src','<%=request.getContextPath()%>/resources/images/regist/female_1.png');
 		}
@@ -343,17 +439,105 @@
 			$('#USER_EMAIL_LAST').val("");
 			$('#USER_EMAIL_LAST').attr('readonly',false);
 			$('#USER_EMAIL_LAST').focus();
+			email_last_check();
 		}else{
 			$('#USER_EMAIL_LAST').val($(this).text());
 			$('#USER_EMAIL_LAST').attr('readonly',true);
+			if($('#USER_EMAIL_FIRST').val().replace(/\s*/gm, '')!=""){
+				email_last_check();
+			}else{
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+			}
 		}
 		
 	});	
-	$('#USER_EMAIL_FIRST').change(function(){
+	$('#USER_EMAIL_FIRST').keyup(function(){
+		if($(this).val().replace(/\s*/gm, '')!=""){
+			if($('#USER_EMAIL_LAST').val().replace(/\s*/gm, '')!=""){
+				email_last_check();
+			}else{
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+				email_check = false;
+			}
+		}else{
+			if($('#USER_EMAIL_LAST').val().replace(/\s*/gm, '')!=""){
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+				email_check = false;
+			}else{
+				$('#CHECK_EMAIL_TXT').html("");
+				$('#CHECK_EMAIL').hide();
+				email_check = false;
+			}
+		}
 		
 	});
-	$('#USER_EMAIL_LAST').change(function(){
-		
+	$('#USER_EMAIL_LAST').keyup(function(){
+		if($(this).val().replace(/\s*/gm, '')!=""){
+			if($('#USER_EMAIL_FIRST').val().replace(/\s*/gm, '')!=""){
+				email_last_check();
+			}else{
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+				email_check = false;
+			}
+		}else{
+			if($('#USER_EMAIL_FIRST').val().replace(/\s*/gm, '')!=""){
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+				email_check = false;
+			}else{
+				$('#CHECK_EMAIL_TXT').html("");
+				$('#CHECK_EMAIL').hide();
+				email_check = false;
+			}
+			
+		}
 	});
+	function email_last_check(){
+		if($('#USER_EMAIL_LAST').val().split(".").length==2){
+			//ID체크
+			if($('#USER_EMAIL_LAST').val().split(".")[1].replace(/\s*/gm, '')!=""){
+				if($('#USER_EMAIL_LAST').val().split(".")[1].match(/[^a-zA-Z]/)==null){
+					 check_id();					 
+				}else{
+					$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+					$('#CHECK_EMAIL').show();
+					email_check = false;
+				}
+			}else{
+				$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+				$('#CHECK_EMAIL').show();
+				email_check = false;
+			}
+			
+		}else{
+			$('#CHECK_EMAIL_TXT').html("이메일 형식에 맞게 입력해 주십시오.");
+			$('#CHECK_EMAIL').show();
+			email_check = false;
+		}
+	}
+	function check_id(){
+		var user_id =$('#USER_EMAIL_FIRST').val()+"@"+$('#USER_EMAIL_LAST').val();
+		$.ajax({
+			url : "/ajax/",
+			type : 'post',
+			dataType : "text",
+			async : true, 
+			data : {"CMD":"email_check","user_id":user_id},
+			success : function(result) {
+				if(Number(result)>0){
+					$('#CHECK_EMAIL_TXT').html("동일한 이메일이 있습니다.");	
+					email_check = false;
+				}else{
+					 $('#CHECK_EMAIL_TXT').html("사용 가능한 이메일 입니다.");	
+					 email_check = true;
+				}
+				$('#CHECK_EMAIL').show();			 
+			}
+		});	
+	}
 </script>
 </html>

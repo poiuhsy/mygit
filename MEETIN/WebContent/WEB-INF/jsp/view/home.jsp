@@ -79,6 +79,9 @@
 				</c:forEach>
 			</table>
 		</div>
+		<div>
+			<input type="button" value="결제관련" onclick="call_term('pay')">
+		</div>
 	</div>
 	<form id="frm" action="" method="post"></form>
 </body>

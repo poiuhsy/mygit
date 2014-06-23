@@ -43,26 +43,29 @@ public class UserController extends HttpServlet {
 		int dotIdx = command.indexOf(".");
 		String goORdo = command.substring(dotIdx + 1);
 		String pageCmd = command.substring(0, dotIdx);
+
 		if (goORdo.equals("go")) {
 			forward = new ActionForward();
 			if (pageCmd.equals("regist")) {
-				forward.setPath("/WEB-INF/jsp/view/user_regist.jsp");			
-				forward.setRedirect(false);
-			} else if (pageCmd.equals("regist_1")) {
-				action = new UserRegistAction();			
-				try {
-					forward = action.excute(request, response);
+				String step = request.getParameter("step");
+				if(step.equals("0")){
+					forward.setPath("/WEB-INF/jsp/view/user_regist.jsp");			
+					forward.setRedirect(false);
+				}else if(step.equals("1")){
+					action = new UserRegistAction();			
+					try {
+						forward = action.excute(request, response);
 
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else if (pageCmd.equals("regist_2")) {
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}				
+			} else if (pageCmd.equals("regist_1")) {
 				forward = new ActionForward();
 				forward.setPath("/WEB-INF/jsp/view/user_regist_1.jsp");
 				forward.setRedirect(false);
-				System.out.println("123123");
-			} else if(pageCmd.equals("regist_3")) {
+			} else if(pageCmd.equals("regist_2")) {
 				forward = new ActionForward();
 				forward.setPath("/WEB-INF/jsp/view/user_regist_2.jsp");
 				forward.setRedirect(false);

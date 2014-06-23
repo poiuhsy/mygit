@@ -59,7 +59,10 @@ function logout(userid) {
 	$('#frm').submit();
 }
 function registGo() {
-	location.href = "/user/regist.go";			
+	//location.href = "/user/regist.go";		
+	$('#frm').attr('action','/user/regist.go');
+	createInputHidden('frm','step',"0");
+	$('#frm').submit();
 }
 function next_regist_step2(){
 	if(!$('#private_term').is(':checked')){
@@ -67,44 +70,32 @@ function next_regist_step2(){
 	}else if(!$('#meetin_term').is(':checked')){
 		alert("밋인 이용 약관에 동의해 주세요.");
 	}else{
-		if($('#USER_EMAIL_FIRST').val().replace(/\s*/gm, '')=="" || $('#USER_EMAIL_LAST').val().replace(/\s*/gm, '')==""){
-			alert("이메일을 형식에 맞게 입력해 주세요");
-		}else if($('#name').val().replace(/\s*/gm, '')==""){
+		if($('#name').val().replace(/\s*/gm, '')==""){
+			$('#name').focus();
 			alert("이름을 입력해 주세요");
-		}else if($('#check_pwd').val()!=$('#pwd').val()){
-			alert("비밀번호가 일치하지 않습니다.");
-		}else if($('input[name=gender]:checked').length<0){
-			alert("성별을 선택 해 주세요");
-		}else if($('#year').val()=="" || $('#month').val()=="" || $('#day').val()=="" ){
+		}else if(!email_check){
+			$('#email').focus();
+			alert("이메일을 확인해 주세요.");
+		}else if(!pass_check){
+			alert("비밀번호가 조건에 일치하지 않습니다.");
+		}else if(!compare_pass){
+			alert("비밀번호가  일치하지 않습니다.");
+		}else if($('#year').text().replace(/\s*/gm, '')=="년도" || $('#month').text().replace(/\s*/gm, '')=="월" || $('#day').text().replace(/\s*/gm, '')=="일" ){
 			alert("생년월일을 입력해 주세요");
-		}else{
-			//$.ajax({
-			//	url : "/session/",
-			//	type : 'post',
-			//	dataType : "text",
-			//	async : true, 
-			//	data : {"KEY":"email|pwd|name|gender|birthdate","CMD":"add",
-			//		   "VAL":$('#USER_EMAIL_FIRST').val()+"@"+$('#USER_EMAIL_LAST').val()+"|"+$('#pwd').val()+"|"+$('#name').val()
-			//		   +"|"+$('input[type=radio]:checked').val()+"|"+$('#year').val()+$('#month').val()+$('#day').val()
-			//	},
-			//	success : function(result) {
-			//		location.href = "/user/regist.do?step=1";
-			//	}
-			//});		
-			$('#frm').attr('action','/user/regist_1.go');
+		}else{				
+			$('#frm').attr('action','/user/regist.go');
 			createInputHidden('frm','step',"1");
 			createInputHidden('frm','email',$('#USER_EMAIL_FIRST').val()+"@"+$('#USER_EMAIL_LAST').val());
 			createInputHidden('frm','pwd',$('#pwd').val());
 			createInputHidden('frm','nm',$('#name').val());
-			createInputHidden('frm','gender',$('input[type=radio]:checked').val());	
-			createInputHidden('frm','birthdate',$('#year').val()+$('#month').val()+$('#day').val());	
+			createInputHidden('frm','gender',select_gender);	
+			createInputHidden('frm','birthdate',$('#year').text()+$('#month').text()+$('#day').text());	
 			$('#frm').submit();	
 			
 		}	
 	}
 }
-function next_regist_step3(){
-	//location.href = "/user/regist.do?step=2&my_image=&egg="+$('input[type=radio]:checked').val();		
+function next_regist_step3(){	
 	$('#frm').attr('action','/user/regist.do');
 	createInputHidden('frm','step',"2");
 	createInputHidden('frm','my_image',"");
@@ -112,10 +103,10 @@ function next_regist_step3(){
 	$('#frm').submit();	
 }
 function skip_page(){
-	location.href = "/user/regist.do?step=2";	
-	//$('#frm').attr('action','/user/regist.do');
-	//createInputHidden('frm','step',"2");	
-	//$('#frm').submit();	
+	//location.href = "/user/regist.do?step=2";	
+	$('#frm').attr('action','/user/regist.do');
+	createInputHidden('frm','step',"2");	
+	$('#frm').submit();	
 }
 function registDo() {
 	$('#frm').attr('action','/user/regist.do');

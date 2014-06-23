@@ -60,19 +60,30 @@
   	<servlet-name>rsa</servlet-name>
   	<url-pattern>/rsa/</url-pattern>
   </servlet-mapping>
-  
-  <!-- 
+    <servlet>
+  	<servlet-name>upload</servlet-name>
+  	<servlet-class>com.meetin.ctrlr.UploadController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>upload</servlet-name>
+  	<url-pattern>/upload/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>terms</servlet-name>
+  	<servlet-class>com.meetin.ctrlr.TermsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>terms</servlet-name>
+  	<url-pattern>/terms/*</url-pattern>
+  </servlet-mapping>
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/WEB-INF/jsp/common/error/error404.jsp</location>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/error/404.jsp</location>
   </error-page>
   <error-page>
-  	<error-code>500</error-code>
-  	<location>/WEB-INF/jsp/common/error/error500.jsp</location>
+    <error-code>500</error-code>
+    <location>/WEB-INF/jsp/error/500.jsp</location>
   </error-page>
-  <error-page>
-  	<exception-type>java.lang.Throwable</exception-type>
-  	<location>/WEB-INF/jsp/common/error/error.jsp</location>
-  </error-page>
-   -->
+ 
+ 
 </web-app>

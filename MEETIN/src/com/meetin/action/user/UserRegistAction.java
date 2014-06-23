@@ -26,14 +26,14 @@ public class UserRegistAction implements Action {
 		String url = "/";
 
 		if(request.getParameter("step").equals("1")){
-			url = "http://localhost:8080/user/regist_2.go";
+			url = "http://220.68.231.130:8080/user/regist_1.go";
 			request.getSession().setAttribute("email", request.getParameter("email"));
 			request.getSession().setAttribute("name", request.getParameter("nm"));
 			request.getSession().setAttribute("pwd", request.getParameter("pwd"));
 			request.getSession().setAttribute("gender", request.getParameter("gender"));
 			request.getSession().setAttribute("birthdate", request.getParameter("birthdate"));
 		}else if(request.getParameter("step").equals("2")){ 
-			url = "http://localhost:8080/user/regist_3.go";
+			url = "http://220.68.231.130:8080/user/regist_2.go";
 			String img = "";
 			String egg_code = "";
 			if(request.getParameter("my_image")!=null && request.getParameter("egg") !=null){

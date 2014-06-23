@@ -64,6 +64,12 @@ public class AjaxClass  extends HttpServlet {
 				session.setAttribute("login", user);
 			}
 			response.getWriter().print(user);
+		}else if(cmd.equals("email_check")){
+			String regist_email = request.getParameter("user_id");
+			UserDao user = new UserDao();
+			
+			int result = user.regist_email_check(regist_email);
+			response.getWriter().print(result);
 		}
 	}
 	

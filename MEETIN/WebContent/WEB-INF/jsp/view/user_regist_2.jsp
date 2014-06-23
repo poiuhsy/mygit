@@ -32,25 +32,26 @@
 <body>
 
 	<div class="DIV_WRAP">
-		<div class="DIV_LOGO">
-			<font style="font-size: 30px; color: #ff6725; font-weight: bolder;">밋인
-				BETA</font>
+		<div style="margin-bottom: 20px">
+			<img src="<%=request.getContextPath()%>/resources/images/common/e_join_title.png">
 		</div>
-		<div class="DIV_TITLE">
-			<font style="font-size: 20px; color: #a0a0a0; font-weight: bolder;">이메일로
-				가입하기</font>
-		</div>
-		<div class="DIV_INPUT_FORM">
+		<div class="DIV_INPUT_FORM" style="margin-top: 40px">
 			<div  align="center">
-				이메일을 확인해주세요~!!						
+				<img src="<%=request.getContextPath()%>/resources/images/regist/e_join_notice.png">						
 			</div>
 		</div>
-		<div>
-			<input type="button" value="메인으로" onclick="go_main()"/>
+		<div style="width: 979px;margin-top:35px ">
+			<table width="100%">
+				<tr>
+					<td height="1px" style="border-top: 1px solid #d0d0d0">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<div style="width: 979px;margin-top:40px " align="center">
+			<img style="cursor: pointer;" onclick="go_main()"
+				src="<%=request.getContextPath()%>/resources/images/regist/main_btn.png">
+				
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	
-</script>
 </html>

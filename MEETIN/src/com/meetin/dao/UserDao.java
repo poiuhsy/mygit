@@ -20,6 +20,15 @@ public class UserDao {
 	public UserDao() {	
 		client = dao.getMapper();		
 	}
+	public int regist_email_check(String id){
+		int result = 0;
+		try {		
+			result = (Integer)client.queryForObject("regist_check_email",id);						
+		} catch (SQLException e) {
+			System.out.println("test_error : "+e.getMessage());
+		}
+		return result;
+	}
 	public User login(String id, String password){
 		param.clear();
 		param.put("ID", id);
@@ -33,8 +42,6 @@ public class UserDao {
 		return u;
 	}	
 	public boolean regist(User user) {
-		
-		System.out.println(user);
 		boolean success = false;
 		param.clear();
 		param.put("ID", user.getUSER_ID());

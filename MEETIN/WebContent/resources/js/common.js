@@ -16,3 +16,13 @@ function go_detail(meeting_sq) {
 function go_main(){
 	location.href = "/";
 }
+function only_eng(str){
+	if(str.match(/[^a-zA-Z]/)!=null){
+		return false;
+	}else{
+		return true;
+	}
+}
+function get_term(idx) {
+	window.open("/terms/"+idx, "_blank");
+}
